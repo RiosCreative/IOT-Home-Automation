@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#263238</color>
+    <color name="colorAccent">#FFC400</color>
+    <color name="textColorPrimary">#000000</color>
+
+    <color name="blueGray500">#607D8B</color>
+    <color name="blueGray700">#455A64</color>
+    <color name="blueGray900">#263238</color>
+    <color name="amber400">#FFC400</color>
+</resources>
