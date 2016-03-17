@@ -11,99 +11,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.rioscreative.iotpracticum.MainActivity">
+    tools:context=".ui.MainActivity"
+
+    android:background="@drawable/bg_gradient">
 
     <TextView
         android:id="@+id/pageTitle"
-        android:text="@string/DeviceListTITLE"
+        android:text="@string/connection_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        style="@style/textScheme1.header1"/>
+        android:layout_marginBottom="16dp"
+        style="@style/textScheme1.header1"
+        android:layout_marginTop="8dp"/>
 
-    <TextView
-        android:id="@+id/group1Title"
-        android:text="@string/group1Label"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        style="@style/textScheme1.header2"/>
+        android:layout_height="match_parent"
+        android:id="@android:id/list"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"
-        cardview:cardElevation="4dp"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="4dp">
-        <TextView
-            android:text="Basic LED CardView"
-            android:layout_marginTop="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"
-        cardview:cardElevation="4dp"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="4dp">
-        <TextView
-            android:text="RGB LED CardView"
-            android:layout_marginTop="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"
-        cardview:cardElevation="4dp"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="4dp">
-        <TextView
-            android:text="RGB LED2 CardView"
-            android:layout_marginTop="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"
-        cardview:cardElevation="4dp"
-        cardview:cardUseCompatPadding="true"
-        cardview:cardCornerRadius="4dp">
-        <TextView
-            android:text="Temperature/Humidity Sensor CardView"
-            android:layout_marginTop="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </android.support.v7.widget.CardView>
 
 
 </LinearLayout>

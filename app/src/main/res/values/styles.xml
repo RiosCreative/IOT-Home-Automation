@@ -7,20 +7,36 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="textScheme1" parent="android:style/TextAppearance">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="textScheme1.header1" parent="android:style/TextAppearance">
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginBottom">5dp</item>
     </style>
+
     <style name="textScheme1.header2" parent="android:style/TextAppearance">
         <item name="android:textColor">@color/blueGray700</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="textScheme1.statusGreen" parent="android:style/TextAppearance">
+        <item name="android:textColor">@color/greenLight</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textScheme1.statusRed" parent="android:style/TextAppearance">
+        <item name="android:textColor">@color/redLight</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

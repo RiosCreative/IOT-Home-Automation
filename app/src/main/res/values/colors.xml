@@ -13,4 +13,7 @@
     <color name="amber400">#FFC400</color>
     <color name="amber700">#FFAB00</color>
     <color name="black">#000000</color>
+    <color name="greenLight">#4CAF50</color>
+    <color name="redLight">#D50000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
