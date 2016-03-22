@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
@@ -13,24 +13,104 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.MainActivity"
 
-    android:background="@drawable/bg_gradient">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/pageTitle"
         android:text="@string/connection_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         style="@style/textScheme1.header1"
         android:layout_marginTop="8dp"/>
 
-    <ListView
+    <RelativeLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@android:id/list"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content"
+        android:id="@+id/internetLayout"
+        android:layout_below="@+id/pageTitle"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Internet Connection"
+            android:id="@+id/InternetConnectivityLabel"
+            android:layout_alignParentLeft="true"
+            style="@style/textScheme1.header2"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:id="@+id/InternetStatusLabel"
+            android:layout_alignParentRight="true"
+            style="@style/textScheme1.statusRed"
+            android:layout_marginBottom="16dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pubnubLayout"
+        android:layout_below="@+id/internetLayout"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PubNub Connection"
+            android:id="@+id/PubNubConnectivityLabel"
+            android:layout_alignParentLeft="true"
+            style="@style/textScheme1.header2"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:id="@+id/PubNubStatusLabel"
+            android:layout_alignParentRight="true"
+            style="@style/textScheme1.statusRed"
+            android:layout_marginBottom="16dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/piLayout"
+        android:layout_below="@+id/pubnubLayout"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Raspberry Pi Connection"
+            android:id="@+id/PiConnectivityLabel"
+            android:layout_alignParentLeft="true"
+            style="@style/textScheme1.header2"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:id="@+id/PiStatusLabel"
+            android:layout_alignParentRight="true"
+            style="@style/textScheme1.statusRed"
+            android:layout_marginBottom="16dp"/>
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="See Device List"
+        android:id="@+id/showDeviceListButton"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="75dp"
+        android:background="@color/amber700"/>
 
 
-
-</LinearLayout>
+</RelativeLayout>

@@ -2,14 +2,24 @@ package com.rioscreative.iotpracticum.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.*;
 import com.pubnub.api.*;
+import com.pubnub.api.Callback;
 import com.rioscreative.iotpracticum.R;
+
+import java.io.IOException;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,19 +29,28 @@ public class MainActivity extends AppCompatActivity {
     String channel = "IOTpracticum";
     Pubnub pubnub = new Pubnub(PUBLISH_KEY, SUBSCRIBE_KEY, false);
 
+    @Bind(R.id.InternetConnectivityLabel) TextView mInternetConnectivityLabel;
+    @Bind(R.id.InternetStatusLabel) TextView mInternetStatusLabel;
+    @Bind(R.id.PubNubConnectivityLabel) TextView mPubNubConnectivityLabel;
+    @Bind(R.id.PubNubStatusLabel) TextView mPubNubStatusLabel;
+    @Bind(R.id.PiConnectivityLabel) TextView mPiConnectivityLabel;
+    @Bind(R.id.PiStatusLabel) TextView mPiStatusLabel;
+    @Bind(R.id.showDeviceListButton) Button mDeviceListButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        // In new versions of Android, the service may not be activated unless
-        // an
-        // associated activity is run at least once. This empty activity serves
-        // that purpose
+        // If network is available, change InternetStatusLabel text to online and textstyle to statusGreen
+        if (isNetworkAvailable()){
+            mInternetStatusLabel.setText(R.string.connection_online);
+            mInternetStatusLabel.setTextAppearance(R.style.textScheme1_statusGreen);
+        }
 
         final Intent serviceIntent = new Intent(this, PubNubService.class);
         startService(serviceIntent);
-
-        Log.i("MainActivity", "PubNub Activity Started!");
 
         Callback callback = new Callback() {
             public void successCallback(String channel, Object response) {
@@ -82,9 +101,23 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        pubnub.publish(channel, "If you receive this, DO WORK!", callback);
+        pubnub.publish(channel, "If you receive this, PubNubConnection is online!", callback);
+        mPubNubStatusLabel.setText(R.string.connection_online);
+        mPubNubStatusLabel.setTextAppearance(R.style.textScheme1_statusGreen);
+
+
     }
 
+            private boolean isNetworkAvailable() {
+                ConnectivityManager manager = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+                boolean isAvailable = false;
+                if(networkInfo != null && networkInfo.isConnected()){
+                    isAvailable = true;
+                }
+                return isAvailable;
+            }
 
 
 }

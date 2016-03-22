@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 /**
  * Created by Turego on 3/17/16.
  */
-public class ConnectionAdapter extends BaseAdapter {
+public class DeviceListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return 0;

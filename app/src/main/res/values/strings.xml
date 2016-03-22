@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">IOT Home Automation</string>
     <string name="connection_status">Connection Status</string>
+    <string name="connection_online">Online</string>
+    <string name="connection_offline">Offline</string>
     <string name="DeviceListTITLE">DEVICE LIST</string>
     <string name="group1Label">Group 1</string>
     <string name="group2Label">Group 2</string>

@@ -3,22 +3,22 @@ package com.rioscreative.iotpracticum.ui;
 /**
  * Created by Turego on 3/17/16.
  */
-public class Connection {
+public class Device {
 
-    private String mLabel;
+    private String mDeviceLabel;
     private boolean mStatus;
 
-    public Connection (String label, boolean status){
-        mLabel = label;
+    public Device(String label, boolean status){
+        mDeviceLabel = label;
         mStatus = status;
     }
 
-    public String getLabel() {
-        return mLabel;
+    public String getDeviceLabel() {
+        return mDeviceLabel;
     }
 
-    public void setLabel(String label) {
-        mLabel = label;
+    public void setDeviceLabel(String deviceLabel) {
+        mDeviceLabel = deviceLabel;
     }
 
     public boolean getStatus() {
