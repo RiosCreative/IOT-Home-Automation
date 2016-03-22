@@ -24,24 +24,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d940f7b-071d-4314-9828-ef7d37708cdf" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_8_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_basement_8_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/connectivity_item.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/adapters/ConnectionAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/adapters/DeviceListAdapter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/Connection.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/Device.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.8/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_gradient.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_gradient.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="IOTpracticum.iws" />
@@ -66,12 +53,12 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9431818">
-              <caret line="115" column="51" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.3181818">
+              <caret line="105" column="95" selection-start-line="105" selection-start-column="95" selection-end-line="105" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1725#1751#0" expanded="true" />
-                <element signature="e#4361#4387#0" expanded="true" />
+                <element signature="e#1778#1804#0" expanded="true" />
+                <element signature="e#2861#2887#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2233,8 +2220,8 @@
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2287,8 +2274,8 @@
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2342,8 +2329,8 @@
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2397,8 +2384,8 @@
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2428,8 +2415,8 @@
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2594,12 +2581,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/rioscreative/iotpracticum/ui/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9431818">
-          <caret line="115" column="51" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.3181818">
+          <caret line="105" column="95" selection-start-line="105" selection-start-column="95" selection-end-line="105" selection-end-column="95" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1725#1751#0" expanded="true" />
-            <element signature="e#4361#4387#0" expanded="true" />
+            <element signature="e#1778#1804#0" expanded="true" />
+            <element signature="e#2861#2887#0" expanded="true" />
           </folding>
         </state>
       </provider>

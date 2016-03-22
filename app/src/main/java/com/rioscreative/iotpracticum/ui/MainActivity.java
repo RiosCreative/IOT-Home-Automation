@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     String PUBLISH_KEY = "pub-c-5d4c8a5c-b2d4-4974-a11c-4a3fc3c2ad8d";
     String SUBSCRIBE_KEY = "sub-c-d52e3da6-c9e4-11e5-b684-02ee2ddab7fe";
     String channel = "IOTpracticum";
@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("SUBSCRIBE : CONNECT on channel:" + channel
                                     + " : " + message.getClass() + " : "
                                     + message.toString());
+                            mPubNubStatusLabel.setText(R.string.connection_online);
+                            mPubNubStatusLabel.setTextAppearance(R.style.textScheme1_statusGreen);
                         }
 
                         @Override
@@ -101,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        pubnub.publish(channel, "If you receive this, PubNubConnection is online!", callback);
-        mPubNubStatusLabel.setText(R.string.connection_online);
-        mPubNubStatusLabel.setTextAppearance(R.style.textScheme1_statusGreen);
+        pubnub.publish(channel, "If you receive this, PubNubConnection is working!", callback);
 
 
     }
