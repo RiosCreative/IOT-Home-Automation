@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
             tempObj.put("Type", "SENS");
             rgbObj.put("Type", "LED");
             rgbObj.put("RED", 255);
-            rgbObj.put("GREEN", 0);
-            rgbObj.put("BLUE", 0);
+            rgbObj.put("GREEN", 255);
+            rgbObj.put("BLUE", 255);
 
         } catch (JSONException e) {
             e.printStackTrace();

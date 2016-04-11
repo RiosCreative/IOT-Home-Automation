@@ -16,4 +16,5 @@
     <color name="greenLight">#4CAF50</color>
     <color name="redLight">#D50000</color>
     <color name="white">#FFFFFF</color>
+    <color name="lightGray">#33CCCCCC</color>
 </resources>
