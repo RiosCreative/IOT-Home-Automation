@@ -1,11 +1,9 @@
 package com.rioscreative.iotpracticum.ui;
 
 import android.content.Intent;
-import android.os.StrictMode;
-import android.os.SystemClock;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -57,6 +55,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     // Color Saving Strings
     public String currentRGBcolor = "FFFFFF";
     public String currentRGBstripColor = "FFFFFF";
+    public static final String colorBlack = "000000";
 
     // LED
     @Bind(R.id.ledSwitch) Switch mLedSwitch;
@@ -169,29 +168,16 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                 System.out.println(error.toString());
             }
         };
-
-        try {
-            // Remove previous status if it exists
-            rgbObj.remove("Type");
-            rgbObj.remove("RED");
-            rgbObj.remove("GREEN");
-            rgbObj.remove("BLUE");
-            // Add new RGB color Status
-            rgbObj.put("Type", "RGB");
-            rgbObj.put("RED", red);
-            rgbObj.put("GREEN", green);
-            rgbObj.put("BLUE", blue);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        ColorConversion rgbConvert = new ColorConversion(red, green, blue);
+        rgbClearAndColor(rgbObj, rgbConvert.getRGBcolor(), callback);
         mPubnub.publish(channel1, rgbObj, callback);
-
+        currentRGBcolor = rgbConvert.getRGBcolor();
     }
 
     private void updateRGBhexText(int red, int green, int blue) {
-        colorConversion converter = new colorConversion(red, green, blue);
-        String newColor = converter.getRGBvalue();
-        mRGBcolorEdit.setText("#" + newColor);
+        ColorConversion converter = new ColorConversion(red, green, blue);
+        String newColor = converter.getRGBcolor();
+        mRGBcolorEdit.setText(newColor);
 
     }
 
@@ -241,29 +227,16 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                 System.out.println(error.toString());
             }
         };
-
-        try {
-            // Remove previous status if it exists
-            rgbStripObj.remove("Type");
-            rgbStripObj.remove("RED");
-            rgbStripObj.remove("GREEN");
-            rgbStripObj.remove("BLUE");
-            // Add new color Status
-            rgbStripObj.put("Type", "STRIP");
-            rgbStripObj.put("RED", red);
-            rgbStripObj.put("GREEN", green);
-            rgbStripObj.put("BLUE", blue);
-            mPubnub.publish(channel1, rgbStripObj, callback);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        ColorConversion rgbStripConvert = new ColorConversion(red, green, blue);
+        rgbClearAndColor(rgbStripObj, rgbStripConvert.getRGBcolor(), callback);
         mPubnub.publish(channel1, rgbStripObj, callback);
+        currentRGBstripColor = rgbStripConvert.getRGBcolor();
     }
 
     private void updateRGBstripHexText(int red, int green, int blue) {
-        colorConversion converter = new colorConversion(red, green, blue);
-        String newColor = converter.getRGBvalue();
-        mRGBcolorStripEdit.setText("#" + newColor);
+        ColorConversion converter = new ColorConversion(red, green, blue);
+        String newColor = converter.getRGBcolor();
+        mRGBcolorStripEdit.setText(newColor);
     }
 
     public void initiatePubNub(){
@@ -319,6 +292,10 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     }
 
     public void rgbClearAndColor (JSONObject js, String color, Callback callback) {
+        ColorConversion convert = new ColorConversion(color);
+        int red = convert.getRedValue();
+        int green = convert.getGreenValue();
+        int blue = convert.getBlueValue();
 
         try {
             // Remove previous Color status if it exists
@@ -328,16 +305,10 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
             js.remove("BLUE");
             // Add new "ON" Status
             js.put("Type", "RGB");
-            js.put("RED", 255);
-            js.put("GREEN", 255);
-            js.put("BLUE", 255);
-            mPubnub.publish(channel1, rgbObj, callback);
-            // Update Seek Bars
-            mRedSeekBar.setProgress(255);
-            mGreenSeekBar.setProgress(255);
-            mBlueSeekBar.setProgress(255);
-            // Update EditText
-            mRGBcolorEdit.setText("#FFFFFF");
+            js.put("RED", red);
+            js.put("GREEN", green);
+            js.put("BLUE", blue);
+            mPubnub.publish(channel1, js, callback);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -397,115 +368,67 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
             case R.id.rgbLedSwitch:
                 Log.i("RGB LED", isChecked + "");
                 if (isChecked==true){
+                    // Adjust UI style change for Switch Label Status "ON"
                     mRgbLedSwitch.setText(R.string.statusON);
                     mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
                     // Turn RGB LED On (White)
-                    try {
-                        // Remove previous "OFF "status if it exists
-                        rgbObj.remove("Type");
-                        rgbObj.remove("RED");
-                        rgbObj.remove("GREEN");
-                        rgbObj.remove("BLUE");
-                        // Add new "ON" Status
-                        rgbObj.put("Type", "RGB");
-                        rgbObj.put("RED", 255);
-                        rgbObj.put("GREEN", 255);
-                        rgbObj.put("BLUE", 255);
-                        mPubnub.publish(channel1, rgbObj, callback);
-                        // Update Seek Bars
-                        mRedSeekBar.setProgress(255);
-                        mGreenSeekBar.setProgress(255);
-                        mBlueSeekBar.setProgress(255);
-                        // Update EditText
-                        mRGBcolorEdit.setText("#FFFFFF");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    rgbClearAndColor(rgbObj, currentRGBcolor, callback);
+                    mPubnub.publish(channel1, rgbObj, callback);
+                    // Update Seek Bars
+                    ColorConversion rgbConvert = new ColorConversion(currentRGBcolor);
+                    mRedSeekBar.setProgress(rgbConvert.getRedValue());
+                    mGreenSeekBar.setProgress(rgbConvert.getGreenValue());
+                    mBlueSeekBar.setProgress(rgbConvert.getBlueValue());
+                    // Update EditText
+                    mRGBcolorEdit.setText(currentRGBcolor);
                 }
                 else {
+                    // Adjust UI style change for Switch Label Status "OFF"
                     mRgbLedSwitch.setText(R.string.statusOFF);
                     mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusRed);
-
                     // Turn RGB LED OFF (Black)
-                    try {
-                        // Remove previous "ON "status if it exists
-                        rgbObj.remove("Type");
-                        rgbObj.remove("RED");
-                        rgbObj.remove("GREEN");
-                        rgbObj.remove("BLUE");
-                        // Add new "OFF" Status
-                        rgbObj.put("Type", "RGB");
-                        rgbObj.put("RED", 0);
-                        rgbObj.put("GREEN", 0);
-                        rgbObj.put("BLUE", 0);
-                        mPubnub.publish(channel1, rgbObj, callback);
-                        // Update Seek Bars
-                        mRedSeekBar.setProgress(0);
-                        mGreenSeekBar.setProgress(0);
-                        mBlueSeekBar.setProgress(0);
-                        // Update EditText
-                        mRGBcolorEdit.setText("#000000");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    rgbClearAndColor(rgbObj, colorBlack, callback);
+                    mPubnub.publish(channel1, rgbObj, callback);
+                    // Update Seek Bars
+                    mRedSeekBar.setProgress(0);
+                    mGreenSeekBar.setProgress(0);
+                    mBlueSeekBar.setProgress(0);
+                    // Update EditText
+                    mRGBcolorEdit.setText(colorBlack);
                 }
                 break;
 
             case R.id.ledStripSwitch:
                 Log.i("RGB Strip", isChecked + "");
                 if (isChecked==true){
+                    // Adjust UI style change for Switch Label Status "ON"
                     mledStripSwitch.setText(R.string.statusON);
                     mledStripSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
                     // Turn On RGB Strip LEDs
-                    try {
-                        // Remove previous "OFF" status if it exists
-                        rgbStripObj.remove("Type");
-                        rgbStripObj.remove("RED");
-                        rgbStripObj.remove("GREEN");
-                        rgbStripObj.remove("BLUE");
-                        // Add new "ON" Status
-                        rgbStripObj.put("Type", "STRIP");
-                        rgbStripObj.put("RED", 255);
-                        rgbStripObj.put("GREEN", 255);
-                        rgbStripObj.put("BLUE", 255);
-                        mPubnub.publish(channel1, rgbStripObj, callback);
-                        // Update Seek Bars
-                        mRedStripSeekBar.setProgress(255);
-                        mGreenStripSeekBar.setProgress(255);
-                        mBlueStripSeekBar.setProgress(255);
-                        // Update EditText
-                        mRGBcolorStripEdit.setText("#FFFFFF");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    rgbClearAndColor(rgbStripObj, currentRGBstripColor, callback);
+                    mPubnub.publish(channel1, rgbStripObj, callback);
+                    // Update Seek Bars
+                    ColorConversion rgbStripConvert = new ColorConversion(currentRGBstripColor);
+                    mRedStripSeekBar.setProgress(rgbStripConvert.getRedValue());
+                    mGreenStripSeekBar.setProgress(rgbStripConvert.getGreenValue());
+                    mBlueStripSeekBar.setProgress(rgbStripConvert.getBlueValue());
+                    // Update EditText
+                    mRGBcolorStripEdit.setText(currentRGBstripColor);
 
                 }
                 else {
+                    // Adjust UI style change for Switch Label Status "OFF"
                     mledStripSwitch.setText(R.string.statusOFF);
                     mledStripSwitch.setTextAppearance(R.style.textScheme1_statusRed);
                     // Turn Off RGB Strip LEDs
-                    try {
-                        // Remove previous "ON "status if it exists
-                        rgbStripObj.remove("Type");
-                        rgbStripObj.remove("RED");
-                        rgbStripObj.remove("GREEN");
-                        rgbStripObj.remove("BLUE");
-                        // Add new "OFF" Status
-                        rgbStripObj.put("Type", "STRIP");
-                        rgbStripObj.put("RED", 0);
-                        rgbStripObj.put("GREEN", 0);
-                        rgbStripObj.put("BLUE", 0);
-                        mPubnub.publish(channel1, rgbStripObj, callback);
-                        // Update Seek Bars
-                        mRedStripSeekBar.setProgress(0);
-                        mGreenStripSeekBar.setProgress(0);
-                        mBlueStripSeekBar.setProgress(0);
-                        // Update EditText
-                        mRGBcolorStripEdit.setText("#000000");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                    rgbClearAndColor(rgbStripObj, colorBlack, callback);
+                    mPubnub.publish(channel1, rgbStripObj, callback);
+                    // Update Seek Bars
+                    mRedStripSeekBar.setProgress(0);
+                    mGreenStripSeekBar.setProgress(0);
+                    mBlueStripSeekBar.setProgress(0);
+                    // Update EditText
+                    mRGBcolorStripEdit.setText(colorBlack);
                 }
                 break;
 
@@ -521,14 +444,6 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
                         mTempValue.setText(generalMessage.getString("Temperature")+ (char) 0x00B0 + "F");
                         mHumidValue.setText(generalMessage.getString("Humidity")+"%");
-                        //if (generalMessage.get("Temperature") != null) {
-                            //mTempValue.setText(generalMessage.getString("Temperature")+ R.string.degreeSign);
-                            //mHumidValue.setText(generalMessage.getString("Humidity")+"%");
-                            //Log.i("SUBSCRIBE2 : TEMP", generalMessage.toString());
-                        //}
-
-                        //String tempHumidity = mMessage.toString();
-                        //mTempValue.setText(tempHumidity.substring());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

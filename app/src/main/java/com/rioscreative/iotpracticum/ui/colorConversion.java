@@ -1,8 +1,8 @@
 package com.rioscreative.iotpracticum.ui;
 
-public class colorConversion {
+public class ColorConversion {
 
-    public String mRGBValue;
+    public String mRGBhexColor;
     public String mRed;
     public String mGreen;
     public String mBlue;
@@ -11,10 +11,10 @@ public class colorConversion {
     public int mBlueValue;
 
 
-    public colorConversion(String colorString){
+    public ColorConversion(String colorString){
         // colorString is hex format RGB color.
         // set mRed, mGreen, mBlue, mRedValue, mGreenValue, and mBlueValue
-        mRGBValue = colorString;
+        mRGBhexColor = colorString;
         char[] colorValues = colorString.toCharArray();
 
         mRed = "" + colorValues[0] + colorValues[1];
@@ -25,7 +25,7 @@ public class colorConversion {
         mBlueValue = convertToDec(mBlue);
     }
 
-    public colorConversion(int red, int green, int blue){
+    public ColorConversion(int red, int green, int blue){
         // If red, green, and blue are provided 0-255 integer values
         mRedValue = red;
         mGreenValue = green;
@@ -33,14 +33,14 @@ public class colorConversion {
         mRed = convertToHex(red);
         mGreen = convertToHex(green);
         mBlue = convertToHex(blue);
-        mRGBValue = mRed + mGreen + mBlue;
+        mRGBhexColor = mRed + mGreen + mBlue;
     }
 
-    public String getRGBvalue() {
-        return mRGBValue;
+    public String getRGBcolor() {
+        return mRGBhexColor;
     }
-    public void setRGBvalue(String colorString) {
-        mRGBValue = colorString;
+    public void setRGBcolor(String colorString) {
+        mRGBhexColor = colorString;
     }
 
     public int getRedValue() {

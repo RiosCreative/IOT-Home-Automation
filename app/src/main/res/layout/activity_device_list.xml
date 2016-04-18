@@ -110,14 +110,33 @@
                     android:textOff="@string/statusOFF"
                     android:textOn="@string/statusON"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rgbLedSwitch"
+                    android:layout_alignStart="@+id/rgbLedSwitch"
+                    android:id="@+id/rgbPound"
+                    android:text="#"
+                    android:layout_marginTop="10dp"
+                    style="@style/textScheme1.deviceLabels"
+                    />
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/colorEdit"
                     android:nestedScrollingEnabled="true"
-                    android:text="#FFFFFF"
+                    android:text="FFFFFF"
                     android:layout_below="@+id/rgbLedSwitch"
-                    android:layout_alignStart="@+id/rgbLedSwitch"/>
+                    android:layout_toEndOf="@+id/rgbPound"/>
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/rgbColorButton"
+                    android:layout_alignBottom="@+id/colorEdit"
+                    android:layout_toEndOf="@+id/colorEdit"
+                    android:layout_marginLeft="8dp"
+                    android:text="GO"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,14 +226,34 @@
                     android:textOff="@string/statusOFF"
                     android:textOn="@string/statusON"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ledStripSwitch"
+                    android:layout_alignStart="@+id/ledStripSwitch"
+                    android:id="@+id/rgbStripPound"
+                    android:text="#"
+                    android:layout_marginTop="10dp"
+                    style="@style/textScheme1.deviceLabels"
+                    />
+
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/colorStripEdit"
                     android:nestedScrollingEnabled="true"
-                    android:text="#FFFFFF"
+                    android:text="FFFFFF"
                     android:layout_below="@+id/ledStripSwitch"
-                    android:layout_alignStart="@+id/ledStripSwitch"/>
+                    android:layout_toEndOf="@+id/rgbStripPound"/>
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/rgbStripColorButton"
+                    android:layout_alignBottom="@+id/colorStripEdit"
+                    android:layout_toEndOf="@+id/colorStripEdit"
+                    android:layout_marginLeft="8dp"
+                    android:text="GO"/>
 
                 <SeekBar
                     android:layout_width="wrap_content"
