@@ -2,10 +2,13 @@ package com.rioscreative.iotpracticum.ui;
 
 import android.content.Intent;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -47,8 +50,13 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     JSONObject rgbStripObj = new JSONObject();
     JSONObject tempHumObj = new JSONObject();
     JSONObject generalMessage = new JSONObject();
-    // Message to get temp/Humidity value
-    Object mMessage = new Object();
+
+    // Timing
+    private long lastUpdate = System.currentTimeMillis();
+
+    // Color Saving Strings
+    public String currentRGBcolor = "FFFFFF";
+    public String currentRGBstripColor = "FFFFFF";
 
     // LED
     @Bind(R.id.ledSwitch) Switch mLedSwitch;
@@ -58,17 +66,28 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     @Bind(R.id.redSeekBar) SeekBar mRedSeekBar;
     @Bind(R.id.greenSeekBar) SeekBar mGreenSeekBar;
     @Bind(R.id.blueSeekBar) SeekBar mBlueSeekBar;
+    @Bind(R.id.colorEdit) EditText mRGBcolorEdit;
+    public static final int COLOR_LEDRED = 0;
+    public static final int COLOR_LEDGREEN = 1;
+    public static final int COLOR_LEDBLUE = 2;
 
     // RGB LED Strip
     @Bind(R.id.ledStripSwitch) Switch mledStripSwitch;
     @Bind(R.id.redStripSeekBar) SeekBar mRedStripSeekBar;
     @Bind(R.id.greenStripSeekBar) SeekBar mGreenStripSeekBar;
     @Bind(R.id.blueStripSeekBar) SeekBar mBlueStripSeekBar;
+    @Bind(R.id.colorStripEdit) EditText mRGBcolorStripEdit;
+    public static final int COLOR_STRIPRED = 3;
+    public static final int COLOR_STRIPGREEN = 4;
+    public static final int COLOR_STRIPBLUE = 5;
 
     // Temperature & Humidity Sensor
     @Bind(R.id.tempHumSensorSwitch) Switch mTempHumSensorSwitch;
     @Bind(R.id.temperatureValue) TextView mTempValue;
     @Bind(R.id.humidityValue) TextView mHumidValue;
+
+    // Camera
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +105,165 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
         // RGB LED
         mRgbLedSwitch.setOnCheckedChangeListener(this);
+        setupRGBSeekBar(mRedSeekBar, COLOR_LEDRED);
+        setupRGBSeekBar(mGreenSeekBar, COLOR_LEDGREEN);
+        setupRGBSeekBar(mBlueSeekBar, COLOR_LEDBLUE);
+
 
         // RGB LED Strip
         mledStripSwitch.setOnCheckedChangeListener(this);
+        setupStripSeekBar(mRedStripSeekBar, COLOR_STRIPRED);
+        setupStripSeekBar(mGreenStripSeekBar, COLOR_STRIPGREEN);
+        setupStripSeekBar(mBlueStripSeekBar, COLOR_STRIPBLUE);
 
         // Temp & Humidity Sensor
         mTempHumSensorSwitch.setOnCheckedChangeListener(this);
 
 
+    }
+
+    private void setupRGBSeekBar(SeekBar seekBar, final int colorID) {
+        seekBar.setMax(255); // Seek bar values range from 0-255
+        seekBar.setProgress(255); // Set value to 255 to start
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                publishRGB(mRedSeekBar.getProgress(), mGreenSeekBar.getProgress(), mBlueSeekBar.getProgress());
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mRgbLedSwitch.setText(R.string.statusON);
+                mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
+                mRgbLedSwitch.setChecked(true);
+                publishRGB(mRedSeekBar.getProgress(), mGreenSeekBar.getProgress(), mBlueSeekBar.getProgress());
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Do something when the progress changes
+                int red = mRedSeekBar.getProgress(); // Get the red value 0-255
+                int green = mGreenSeekBar.getProgress(); // Get the green value 0-255
+                int blue = mBlueSeekBar.getProgress(); // Get the blue value from 0-255
+                updateRGBhexText(red, green, blue); // Change the value of the EditText to the correct Hex value
+
+                long now = System.currentTimeMillis(); // Only allow 1 publish every 100 milliseconds
+                if (now - lastUpdate > 100 && fromUser) { // Threshold and only send when user sliding
+                    lastUpdate = now;
+                    publishRGB(red, green, blue);
+                }
+            }
+
+        });
+    }
+
+    private void publishRGB(int red, int green, int blue) {
+        // Create new PubNub Callback
+        Callback callback = new Callback() {
+            public void successCallback(String channel, Object response) {
+                System.out.println(response.toString());
+            }
+            public void errorCallback(String channel, PubnubError error) {
+                System.out.println(error.toString());
+            }
+        };
+
+        try {
+            // Remove previous status if it exists
+            rgbObj.remove("Type");
+            rgbObj.remove("RED");
+            rgbObj.remove("GREEN");
+            rgbObj.remove("BLUE");
+            // Add new RGB color Status
+            rgbObj.put("Type", "RGB");
+            rgbObj.put("RED", red);
+            rgbObj.put("GREEN", green);
+            rgbObj.put("BLUE", blue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mPubnub.publish(channel1, rgbObj, callback);
+
+    }
+
+    private void updateRGBhexText(int red, int green, int blue) {
+        colorConversion converter = new colorConversion(red, green, blue);
+        String newColor = converter.getRGBvalue();
+        mRGBcolorEdit.setText("#" + newColor);
+
+    }
+
+    private void setupStripSeekBar(SeekBar seekBar, final int colorID) {
+        seekBar.setMax(255); // Seek bar values range from 0-255
+        seekBar.setProgress(255); // Set value to 255 to start
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                publishStrip(mRedStripSeekBar.getProgress(), mGreenStripSeekBar.getProgress(), mBlueStripSeekBar.getProgress());
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mledStripSwitch.setText(R.string.statusON);
+                mledStripSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
+                mledStripSwitch.setChecked(true);
+                publishStrip(mRedStripSeekBar.getProgress(), mGreenStripSeekBar.getProgress(), mBlueStripSeekBar.getProgress());
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // Do something when the progress changes
+                int red = mRedStripSeekBar.getProgress(); // Get the red value 0-255
+                int green = mGreenStripSeekBar.getProgress(); // Get the green value 0-255
+                int blue = mBlueStripSeekBar.getProgress(); // Get the blue value from 0-255
+                updateRGBstripHexText(red, green, blue); // Change the value of the EditText to the correct Hex value
+
+                long now = System.currentTimeMillis(); // Only allow 1 publish every 100 milliseconds
+                if (now - lastUpdate > 100 && fromUser) { // Threshold and only send when user sliding
+                    lastUpdate = now;
+                    publishStrip(red, green, blue);
+                }
+            }
+
+        });
+    }
+
+    private void publishStrip(int red, int green, int blue) {
+        // Create new PubNub Callback
+        Callback callback = new Callback() {
+            public void successCallback(String channel, Object response) {
+                System.out.println(response.toString());
+            }
+            public void errorCallback(String channel, PubnubError error) {
+                System.out.println(error.toString());
+            }
+        };
+
+        try {
+            // Remove previous status if it exists
+            rgbStripObj.remove("Type");
+            rgbStripObj.remove("RED");
+            rgbStripObj.remove("GREEN");
+            rgbStripObj.remove("BLUE");
+            // Add new color Status
+            rgbStripObj.put("Type", "STRIP");
+            rgbStripObj.put("RED", red);
+            rgbStripObj.put("GREEN", green);
+            rgbStripObj.put("BLUE", blue);
+            mPubnub.publish(channel1, rgbStripObj, callback);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mPubnub.publish(channel1, rgbStripObj, callback);
+    }
+
+    private void updateRGBstripHexText(int red, int green, int blue) {
+        colorConversion converter = new colorConversion(red, green, blue);
+        String newColor = converter.getRGBvalue();
+        mRGBcolorStripEdit.setText("#" + newColor);
     }
 
     public void initiatePubNub(){
@@ -148,6 +318,30 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
     }
 
+    public void rgbClearAndColor (JSONObject js, String color, Callback callback) {
+
+        try {
+            // Remove previous Color status if it exists
+            js.remove("Type");
+            js.remove("RED");
+            js.remove("GREEN");
+            js.remove("BLUE");
+            // Add new "ON" Status
+            js.put("Type", "RGB");
+            js.put("RED", 255);
+            js.put("GREEN", 255);
+            js.put("BLUE", 255);
+            mPubnub.publish(channel1, rgbObj, callback);
+            // Update Seek Bars
+            mRedSeekBar.setProgress(255);
+            mGreenSeekBar.setProgress(255);
+            mBlueSeekBar.setProgress(255);
+            // Update EditText
+            mRGBcolorEdit.setText("#FFFFFF");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -185,7 +379,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mLedSwitch.setText(R.string.statusOFF);
                     mLedSwitch.setTextAppearance(R.style.textScheme1_statusRed);
                     try {
-                        // Remove previous "ON "status if it exists
+                        // Remove previous "ON" status if it exists
                         ledObj.remove("Type");
                         ledObj.remove("Status");
                         // Add new "OFF" Status
@@ -218,10 +412,15 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                         rgbObj.put("GREEN", 255);
                         rgbObj.put("BLUE", 255);
                         mPubnub.publish(channel1, rgbObj, callback);
+                        // Update Seek Bars
+                        mRedSeekBar.setProgress(255);
+                        mGreenSeekBar.setProgress(255);
+                        mBlueSeekBar.setProgress(255);
+                        // Update EditText
+                        mRGBcolorEdit.setText("#FFFFFF");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    mPubnub.publish(channel1, rgbObj, callback);
                 }
                 else {
                     mRgbLedSwitch.setText(R.string.statusOFF);
@@ -240,10 +439,15 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                         rgbObj.put("GREEN", 0);
                         rgbObj.put("BLUE", 0);
                         mPubnub.publish(channel1, rgbObj, callback);
+                        // Update Seek Bars
+                        mRedSeekBar.setProgress(0);
+                        mGreenSeekBar.setProgress(0);
+                        mBlueSeekBar.setProgress(0);
+                        // Update EditText
+                        mRGBcolorEdit.setText("#000000");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    mPubnub.publish(channel1, rgbObj, callback);
                 }
                 break;
 
@@ -254,7 +458,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mledStripSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
                     // Turn On RGB Strip LEDs
                     try {
-                        // Remove previous "OFF "status if it exists
+                        // Remove previous "OFF" status if it exists
                         rgbStripObj.remove("Type");
                         rgbStripObj.remove("RED");
                         rgbStripObj.remove("GREEN");
@@ -265,6 +469,12 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                         rgbStripObj.put("GREEN", 255);
                         rgbStripObj.put("BLUE", 255);
                         mPubnub.publish(channel1, rgbStripObj, callback);
+                        // Update Seek Bars
+                        mRedStripSeekBar.setProgress(255);
+                        mGreenStripSeekBar.setProgress(255);
+                        mBlueStripSeekBar.setProgress(255);
+                        // Update EditText
+                        mRGBcolorStripEdit.setText("#FFFFFF");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -286,6 +496,12 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                         rgbStripObj.put("GREEN", 0);
                         rgbStripObj.put("BLUE", 0);
                         mPubnub.publish(channel1, rgbStripObj, callback);
+                        // Update Seek Bars
+                        mRedStripSeekBar.setProgress(0);
+                        mGreenStripSeekBar.setProgress(0);
+                        mBlueStripSeekBar.setProgress(0);
+                        // Update EditText
+                        mRGBcolorStripEdit.setText("#000000");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
