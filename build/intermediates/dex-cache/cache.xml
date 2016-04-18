@@ -1,2 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.0_c811473afa6131cec321c7c19bba85b4836f6ed9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.0_0efad00d8e324f3ff1b371bad5cc264016aa1ab2/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_0c37555171fd75f8333b63e1ddb06b9e1d718121/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/butterknife-7.0.1_8b24a3a68ef318213178272171b49ef3b4b9e91a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/.gradle/caches/modules-2/files-2.1/com.pubnub/pubnub-android-debug/3.7.6/4a12535492a6be76f7253ca58c4b579565fed65d/pubnub-android-debug-3.7.6.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4a12535492a6be76f7253ca58c4b579565fed65d">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/pubnub-android-debug-3.7.6_bc7592df21f0489f52a103054c1cf875e863eabb/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_435bc0d0e294c4aa5a5dfb00c498296902f133b6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d4c936aa8c7d2522c82e3f1829c791d9e367f009">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.2.0_95a40f1451161efc4a7d620f724d1385a4170fef/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.2.0_8de7d16db9228a834d4448f133f3a76594ac598c/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="bc599eb9531da9d18bc58ec4eb0b1a1d895f6839">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.2.0_bb52b21e94efe1a9b8e732105ab98c3dbcc42275/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f15a6ae74518cc7a818a329dcbc8b405d90c3699">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_d23069ee98b8061f89c5929e17cbef75379134a7/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.0_4d80c3916f17c0aa5a7246393dd154d679a4887e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.2.0_2ffa1a31c50c919fb625d6c4ecd6c17a010b8ffc/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.2.0_ba6e61d58d05e905d0c7fc5898e0c7a3ba6ef9a6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.4/5fe28b9518e58819180a43a850fbc0dd24b7c050/commons-lang3-3.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5fe28b9518e58819180a43a850fbc0dd24b7c050">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/commons-lang3-3.4_35a59884f5f398daa9217dff93a946916d0a22a9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d1cb2ba461b88535191e37bc48911e1db0e660c1">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_f1d80352d128cc0a5f788459a35eb61cb168d1e6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Turego/Developer/IOTpracticum/app/libs/Pubnub-Android-3.7.6.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9a5d94e9ba7c3d9122876ba4a81ef3b7b9dbaa1e">
+        <dex dex="/Users/Turego/Developer/IOTpracticum/app/build/intermediates/transforms/dex/debug/folders/1000/2/Pubnub-Android-3.7.6_e4f2bd4475c9675366521c9af7e4ef2f6519914b/classes.dex" />
+    </item>
+
+</items>

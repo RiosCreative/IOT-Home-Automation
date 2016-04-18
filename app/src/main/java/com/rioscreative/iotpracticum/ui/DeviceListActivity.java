@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -21,6 +23,7 @@ import com.rioscreative.iotpracticum.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Turego on 3/17/16.
@@ -56,6 +59,10 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     public String currentRGBcolor = "FFFFFF";
     public String currentRGBstripColor = "FFFFFF";
     public static final String colorBlack = "000000";
+
+    // Buttons
+    @Bind(R.id.rgbColorButton) Button mRGBColorButton;
+    @Bind(R.id.rgbStripColorButton) Button mRGBstripColorButton;
 
     // LED
     @Bind(R.id.ledSwitch) Switch mLedSwitch;
@@ -118,8 +125,58 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
         // Temp & Humidity Sensor
         mTempHumSensorSwitch.setOnCheckedChangeListener(this);
 
+        // Button for inputting RGB LED color
+        mRGBColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Change switch status to "ON" if off
+                mRgbLedSwitch.setText(R.string.statusON);
+                mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
+                mRgbLedSwitch.setChecked(true);
+                // Update RGB LED color using inputted value
+                String newColor = mRGBcolorEdit.getText().toString();
+                ColorConversion rgbConvert = new ColorConversion(newColor);
+                rgbClearAndColor(rgbObj, newColor, "RGB", getCallback());
+                mRedSeekBar.setProgress(rgbConvert.getRedValue());
+                mGreenSeekBar.setProgress(rgbConvert.getGreenValue());
+                mBlueSeekBar.setProgress(rgbConvert.getBlueValue());
+                currentRGBcolor = rgbConvert.getRGBcolor();
+            }
+        });
 
+        // Button for inputting RGB LED Strip color
+        mRGBstripColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Change switch status to "ON" if off
+                mledStripSwitch.setText(R.string.statusON);
+                mledStripSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
+                mledStripSwitch.setChecked(true);
+                // Update RGB LED color using inputted value
+                String newColor = mRGBcolorStripEdit.getText().toString();
+                ColorConversion rgbStripConvert = new ColorConversion(newColor);
+                rgbClearAndColor(rgbStripObj, newColor, "STRIP", getCallback());
+                mRedStripSeekBar.setProgress(rgbStripConvert.getRedValue());
+                mGreenStripSeekBar.setProgress(rgbStripConvert.getGreenValue());
+                mBlueStripSeekBar.setProgress(rgbStripConvert.getBlueValue());
+                currentRGBstripColor = rgbStripConvert.getRGBcolor();
+            }
+        });
     }
+
+    public Callback getCallback(){
+        // Create new PubNub Callback
+        Callback callback = new Callback() {
+            public void successCallback(String channel, Object response) {
+                System.out.println(response.toString());
+            }
+            public void errorCallback(String channel, PubnubError error) {
+                System.out.println(error.toString());
+            }
+        };
+        return callback;
+    }
+
 
     private void setupRGBSeekBar(SeekBar seekBar, final int colorID) {
         seekBar.setMax(255); // Seek bar values range from 0-255
@@ -160,17 +217,9 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
     private void publishRGB(int red, int green, int blue) {
         // Create new PubNub Callback
-        Callback callback = new Callback() {
-            public void successCallback(String channel, Object response) {
-                System.out.println(response.toString());
-            }
-            public void errorCallback(String channel, PubnubError error) {
-                System.out.println(error.toString());
-            }
-        };
+        Callback callback = getCallback();
         ColorConversion rgbConvert = new ColorConversion(red, green, blue);
-        rgbClearAndColor(rgbObj, rgbConvert.getRGBcolor(), callback);
-        mPubnub.publish(channel1, rgbObj, callback);
+        rgbClearAndColor(rgbObj, rgbConvert.getRGBcolor(), "RGB", callback);
         currentRGBcolor = rgbConvert.getRGBcolor();
     }
 
@@ -219,17 +268,9 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
     private void publishStrip(int red, int green, int blue) {
         // Create new PubNub Callback
-        Callback callback = new Callback() {
-            public void successCallback(String channel, Object response) {
-                System.out.println(response.toString());
-            }
-            public void errorCallback(String channel, PubnubError error) {
-                System.out.println(error.toString());
-            }
-        };
+        Callback callback = getCallback();
         ColorConversion rgbStripConvert = new ColorConversion(red, green, blue);
-        rgbClearAndColor(rgbStripObj, rgbStripConvert.getRGBcolor(), callback);
-        mPubnub.publish(channel1, rgbStripObj, callback);
+        rgbClearAndColor(rgbStripObj, rgbStripConvert.getRGBcolor(), "STRIP", callback);
         currentRGBstripColor = rgbStripConvert.getRGBcolor();
     }
 
@@ -291,7 +332,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
 
     }
 
-    public void rgbClearAndColor (JSONObject js, String color, Callback callback) {
+    public void rgbClearAndColor (JSONObject js, String color, String type, Callback callback) {
         ColorConversion convert = new ColorConversion(color);
         int red = convert.getRedValue();
         int green = convert.getGreenValue();
@@ -304,7 +345,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
             js.remove("GREEN");
             js.remove("BLUE");
             // Add new "ON" Status
-            js.put("Type", "RGB");
+            js.put("Type", type);
             js.put("RED", red);
             js.put("GREEN", green);
             js.put("BLUE", blue);
@@ -317,14 +358,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         // Create new PubNub Callback
-        Callback callback = new Callback() {
-            public void successCallback(String channel, Object response) {
-                System.out.println(response.toString());
-            }
-            public void errorCallback(String channel, PubnubError error) {
-                System.out.println(error.toString());
-            }
-        };
+        Callback callback = getCallback();
 
         switch (buttonView.getId()) {
             case R.id.ledSwitch:
@@ -372,8 +406,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mRgbLedSwitch.setText(R.string.statusON);
                     mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
                     // Turn RGB LED On (White)
-                    rgbClearAndColor(rgbObj, currentRGBcolor, callback);
-                    mPubnub.publish(channel1, rgbObj, callback);
+                    rgbClearAndColor(rgbObj, currentRGBcolor, "RGB", callback);
                     // Update Seek Bars
                     ColorConversion rgbConvert = new ColorConversion(currentRGBcolor);
                     mRedSeekBar.setProgress(rgbConvert.getRedValue());
@@ -387,8 +420,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mRgbLedSwitch.setText(R.string.statusOFF);
                     mRgbLedSwitch.setTextAppearance(R.style.textScheme1_statusRed);
                     // Turn RGB LED OFF (Black)
-                    rgbClearAndColor(rgbObj, colorBlack, callback);
-                    mPubnub.publish(channel1, rgbObj, callback);
+                    rgbClearAndColor(rgbObj, colorBlack, "RGB", callback);
                     // Update Seek Bars
                     mRedSeekBar.setProgress(0);
                     mGreenSeekBar.setProgress(0);
@@ -405,8 +437,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mledStripSwitch.setText(R.string.statusON);
                     mledStripSwitch.setTextAppearance(R.style.textScheme1_statusGreen);
                     // Turn On RGB Strip LEDs
-                    rgbClearAndColor(rgbStripObj, currentRGBstripColor, callback);
-                    mPubnub.publish(channel1, rgbStripObj, callback);
+                    rgbClearAndColor(rgbStripObj, currentRGBstripColor, "STRIP", callback);
                     // Update Seek Bars
                     ColorConversion rgbStripConvert = new ColorConversion(currentRGBstripColor);
                     mRedStripSeekBar.setProgress(rgbStripConvert.getRedValue());
@@ -421,8 +452,7 @@ public class DeviceListActivity extends AppCompatActivity implements CompoundBut
                     mledStripSwitch.setText(R.string.statusOFF);
                     mledStripSwitch.setTextAppearance(R.style.textScheme1_statusRed);
                     // Turn Off RGB Strip LEDs
-                    rgbClearAndColor(rgbStripObj, colorBlack, callback);
-                    mPubnub.publish(channel1, rgbStripObj, callback);
+                    rgbClearAndColor(rgbStripObj, colorBlack, "STRIP", callback);
                     // Update Seek Bars
                     mRedStripSeekBar.setProgress(0);
                     mGreenStripSeekBar.setProgress(0);

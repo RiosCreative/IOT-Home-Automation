@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/colorEdit"
                     android:nestedScrollingEnabled="true"
-                    android:text="FFFFFF"
+                    android:text="000000"
                     android:layout_below="@+id/rgbLedSwitch"
                     android:layout_toEndOf="@+id/rgbPound"/>
 
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/colorStripEdit"
                     android:nestedScrollingEnabled="true"
-                    android:text="FFFFFF"
+                    android:text="000000"
                     android:layout_below="@+id/ledStripSwitch"
                     android:layout_toEndOf="@+id/rgbStripPound"/>
 
