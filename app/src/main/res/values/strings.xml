@@ -5,4 +5,6 @@
     <string name="connection_offline">Offline</string>
     <string name="DeviceListTITLE">Device List</string>
     <string name="group1Label">Control Group 1</string>
+    <string name="statusON">ON</string>
+    <string name="statusOFF">OFF</string>
 </resources>
